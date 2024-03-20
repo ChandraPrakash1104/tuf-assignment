@@ -33,7 +33,6 @@ async function createDatabase() {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
   `);
-    console.log(res);
   } catch (err) {
     console.error('Error:', err);
   }

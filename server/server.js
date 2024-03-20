@@ -35,7 +35,6 @@ const userCodeInput = z.object({
 
 app.post('/api/usercode', async (req, res) => {
   const { username, preferred_language, stdin, source_code } = req.body;
-  console.log(req.body);
 
   const parsedData = userCodeInput.safeParse({
     username,
@@ -43,7 +42,6 @@ app.post('/api/usercode', async (req, res) => {
     stdin,
     source_code,
   });
-  console.log(parsedData);
   if (!parsedData.success) {
     res.status(400).json({ error: parsedData.error });
     return;
@@ -56,7 +54,6 @@ app.post('/api/usercode', async (req, res) => {
       stdin,
       source_code
     );
-    console.log(data);
     res.status(201).json({ data });
   } catch (error) {
     console.error('Error creating user code:', error);
@@ -66,7 +63,6 @@ app.post('/api/usercode', async (req, res) => {
 
 app.get('/api/usercode/:id', async (req, res) => {
   const id = req.params.id;
-  console.log(id);
   try {
     const data = await getUserCodeUsingId(id);
     res.status(200).json({ data });
