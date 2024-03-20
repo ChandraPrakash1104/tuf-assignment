@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useFetchSubmission from '../hooks/useFetchSubmission';
 import AppBar from '../components/AppBar';
-import RunSubmissionCode from '../components/RunSubmissionCode';
+import RunSubmittedCode from '../components/RunSubmittedCode';
+import Loading from '../components/Loading';
 
 const Submission = () => {
   const params = useParams();
   const { data, isLoading } = useFetchSubmission(params.id);
+  const [showOutput, setShowOutput] = useState(false);
   if (isLoading) {
-    return <div>loading...</div>;
+    return (
+      <div className='flex items-center justify-center h-screen'>
+        <Loading />
+      </div>
+    );
   }
 
   const lines = data?.source_code.split('\n');
@@ -21,7 +27,10 @@ const Submission = () => {
           <div>
             <div className='flex justify-between'>
               <div className='font-semibold'>Code</div>
-              <div>{data.preferred_language}</div>
+              <div>
+                <span className='font-semibold'>Lang:</span>{' '}
+                {data.preferred_language}
+              </div>
               <div className='text-slate-500 text-sm'>
                 {new Date(data.created_at).toLocaleString()}
               </div>
@@ -54,11 +63,25 @@ const Submission = () => {
             </div>
           </div>
           <div>
-            <RunSubmissionCode
-              sourceCode={data.source_code}
-              stdin={data.stdin}
-              lang={data.preferred_language}
-            />
+            <div className='min-h-16'>
+              <div className='flex justify-between'>
+                <div className='font-semibold'>Output</div>
+                <button
+                  className='bg-gray-800 text-gray-50 px-4 py-1 rounded-lg hover:bg-gray-900 transition-all font-semibold cursor-pointer text-sm'
+                  type='submit'
+                  onClick={() => setShowOutput(true)}
+                >
+                  Run
+                </button>
+              </div>
+            </div>
+            {showOutput && (
+              <RunSubmittedCode
+                sourceCode={data.source_code}
+                stdin={data.stdin}
+                lang={data.preferred_language}
+              />
+            )}
           </div>
         </div>
       </div>

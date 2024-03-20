@@ -1,11 +1,16 @@
 import useDataFetcher from '../hooks/useDataFetcher';
 import DataRow from './DataRow';
+import Loading from './Loading';
 
 const DataTable = () => {
   const { data, isLoading, error } = useDataFetcher();
 
   if (isLoading) {
-    return <div>loading...</div>;
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <Loading />
+      </div>
+    );
   }
   console.log(typeof data);
   return (

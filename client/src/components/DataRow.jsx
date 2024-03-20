@@ -5,7 +5,7 @@ const DataRow = ({ username, stdin, preferredLanguage, code, time, id }) => {
 
   return (
     <tr
-      className='border-b-4 border-slate-200 hover:bg-slate-100 transition-all'
+      className='border-b-4 border-slate-200  hover:bg-slate-100 transition-all'
       onClick={() => {
         navigate(`/submission/${id}`);
       }}

@@ -3,7 +3,7 @@ import DataTable from '../components/DataTable';
 
 const Home = () => {
   return (
-    <div className='bg-slate-200 space-y-6 h-screen'>
+    <div className='bg-slate-200 space-y-6 min-h-screen '>
       <AppBar />
       <DataTable />
     </div>
